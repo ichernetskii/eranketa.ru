@@ -1,0 +1,64 @@
+@import "style/variables.scss";
+
+body {
+  color: $color-text;
+  font-family: $font-family-base;
+  font-weight: $font-weight;
+  font-size: $font-size-base;
+}
+
+// + Выделение текста
+::selection {
+  background: $color-text-selection; /* Safari */
+}
+
+::-moz-selection {
+  background: $color-text-selection; /* Firefox */
+}
+// - Выделение текста*/
+
+:root {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hidden {
+  display: none;
+}
+
+.header-0 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: $font-size-h1-large;
+}
+
+.header-1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: $font-size-h1;
+}
+
+.header-2 {
+  text-align: center;
+  font-size: $font-size-h2;
+}
+
+.header-3 {
+  text-align: center;
+  font-size: $font-size-h3;
+}
+
+.header-4 {
+  text-align: center;
+  font-size: $font-size-h4;
+}
+
+.header-5 {
+  text-align: center;
+  font-size: $font-size-h5;
+}
+
+.header-6 {
+  text-align: center;
+  font-size: $font-size-h6;
+}

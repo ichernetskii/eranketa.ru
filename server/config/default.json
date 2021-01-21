@@ -1,0 +1,28 @@
+{
+  "port": 5000,
+  "lang": "ru",
+  "network": {
+    "error": {
+      "abstract": {
+        "ru": "Что-то пошло не так. Попробуйте позже.",
+        "en": "Something goes bad. Try again later.",
+        "status": 500
+      }
+    },
+    "message": {
+
+    }
+  },
+  "user": {
+    "error": {
+
+    },
+    "message": {
+      "create": {
+        "ru": "Пользователь создан",
+        "en": "User created",
+        "status": 201
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+<%  htmlWebpackPlugin.options.lang = htmlWebpackPlugin.options.lang || "ru"
+    htmlWebpackPlugin.options.meta = htmlWebpackPlugin.options.meta || []
+    htmlWebpackPlugin.options.links = htmlWebpackPlugin.options.links || []
+    htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || [] %>
+<!doctype html>
+<html lang="<%= htmlWebpackPlugin.options.lang %>">
+<!--!
+    Website is created in web-studio Smarto: https://smarto.pro
+    Copyright (C) <%= new Date().getFullYear() %> Smarto
+-->
+<head>
+    <!-- <base> -->
+    <% if (htmlWebpackPlugin.options.baseHref) { %>
+        <base href="<%= htmlWebpackPlugin.options.baseHref %>" />
+    <% } %>
+
+    <!-- [meta] -->
+    <% if (Array.isArray(htmlWebpackPlugin.options.meta)) {
+        for (item of htmlWebpackPlugin.options.meta) { %>
+            <meta<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %>>
+        <% } %>
+    <% } %>
+
+    <!-- title -->
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <!-- favicon -->
+    <% if (htmlWebpackPlugin.files.favicon) { %>
+        <link href="<%= htmlWebpackPlugin.files.favicon %>" rel="shortcut icon" />
+    <% } %>
+
+    <!-- mobile -->
+    <% if (htmlWebpackPlugin.options.mobile) { %>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <% } %>
+
+    <!-- [links] -->
+    <% for (let item of htmlWebpackPlugin.options.links) {
+        if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
+        <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> />
+    <% } %>
+
+    <!-- Webpack CSS -->
+    <% for (let key in htmlWebpackPlugin.files.css) {
+        if (htmlWebpackPlugin.files.cssIntegrity) { %>
+            <link
+                href="<%= htmlWebpackPlugin.files.css[key] %>"
+                rel="stylesheet"
+                integrity="<%= htmlWebpackPlugin.files.cssIntegrity[key] %>"
+                crossorigin="<%= webpackConfig.output.crossOriginLoading %>" />
+        <% } else { %>
+           <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet" />
+        <% } %>
+    <% } %>
+
+    <% if (htmlWebpackPlugin.options.headHtmlSnippet) { %>
+        <%= htmlWebpackPlugin.options.headHtmlSnippet %>
+    <% } %>
+</head>
+<body>
+    <% if (htmlWebpackPlugin.options.bodyHtmlSnippet) { %>
+        <%= htmlWebpackPlugin.options.bodyHtmlSnippet %>
+    <% } %>
+
+    <!-- React root -->
+    <div id="root"></div>
+
+    <!-- Dev info -->
+    <% if (webpackConfig.mode === "development") { %>
+        <div style="color: #F00">Development mode</div>
+        <div>Build date: <%= htmlWebpackPlugin.options.buildDate %></div>
+    <% } %>
+
+    <!-- [JS] -->
+    <% for (let item of htmlWebpackPlugin.options.scripts) {
+        if (typeof item === 'string' || item instanceof String) { item = { src: item, type: 'text/javascript' } } %>
+        <script<% for (let key in item) { %> <%= key %>="<%= item[key] %>"<% } %>></script>
+    <% } %>
+
+    <!-- Webpack JS -->
+    <% for (let js in htmlWebpackPlugin.files.js) { %>
+        <script src="<%= htmlWebpackPlugin.files.js[js] %>"></script>
+    <% } %>
+
+    <!-- Google Analytics -->
+    <% if (htmlWebpackPlugin.options.googleAnalytics) { %>
+        <script type="text/javascript">
+            window.GoogleAnalyticsObject='ga';window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            <% if (htmlWebpackPlugin.options.googleAnalytics.trackingId) { %>
+                ga('create','<%= htmlWebpackPlugin.options.googleAnalytics.trackingId %>','auto');
+            <% } else { throw new Error("html-webpack-template requires googleAnalytics.trackingId config"); } %>
+            <% if (htmlWebpackPlugin.options.googleAnalytics.pageViewOnLoad) { %>
+                ga('send','pageview')
+            <% } %>
+        </script>
+        <script async defer src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script>
+    <% } %>
+</body>
+</html>
