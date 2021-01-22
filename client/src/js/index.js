@@ -1,8 +1,13 @@
 // React
-import React from "react";
+import React, {Suspense} from "react";
 import ReactDOM from "react-dom";
 
 // Components
-import App from "components/app";
+const App = React.lazy(() => import("components/app"));
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+    <Suspense fallback="Загрузка ...">
+        <App />
+    </Suspense>,
+    document.getElementById("root")
+);

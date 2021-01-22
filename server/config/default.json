@@ -1,27 +1,91 @@
 {
   "port": 5000,
   "lang": "ru",
-  "network": {
+  "mongoUri": "mongodb://ilya:ilya239@localhost:27017/eranketa?authSource=admin",
+  "jwtSecret": "vs!23defcjh#!@#-+gsgfhj*&TGUYG@#*G80-w34rh8Y&G^*gb87y",
+  "server": {
     "error": {
       "abstract": {
-        "ru": "Что-то пошло не так. Попробуйте позже.",
-        "en": "Something goes bad. Try again later.",
+        "ru": "Ошибка сервера. Попробуйте позже.",
+        "en": "Server error. Try again later.",
         "status": 500
       }
-    },
-    "message": {
-
     }
   },
   "user": {
     "error": {
-
+      "wrongFormat": {
+        "ru": "Неверно введён email",
+        "en": "Wrong email"
+      },
+      "passwordLength": {
+        "ru": "Минимальная длина пароля 6 символов",
+        "en": "Minimum password length is 6 chars"
+      },
+      "passwordExists": {
+        "ru": "Пароль не указан",
+        "en": "Type password"
+      },
+      "registration": {
+        "ru": "Неверные регистрационные данные",
+        "en": "Wrong registration data",
+        "status": 400
+      },
+      "login": {
+        "ru": "Неверные регистрационные данные",
+        "en": "Wrong login data",
+        "status": 401
+      },
+      "notFound": {
+        "ru": "Пользователь не найден",
+        "en": "User not found",
+        "status": 401
+      },
+      "notMatch": {
+        "ru": "Неверный пароль",
+        "en": "Wrong password",
+        "status": 401
+      },
+      "exists": {
+        "ru": "Пользователь уже существует",
+        "en": "User already exists",
+        "status": 400
+      }
     },
     "message": {
       "create": {
         "ru": "Пользователь создан",
         "en": "User created",
         "status": 201
+      }
+    }
+  },
+  "form": {
+    "message": {
+      "create": {
+        "ru": "Спасибо за заполнение. Мы обязательно свяжемся с Вами.",
+        "en": "Thanks for filling out. We will definitely contact you.",
+        "status": 201
+      }
+    },
+    "error": {
+      "emailExists": {
+        "ru": "Пользователь с таким email уже заполнил анкету",
+        "en": "User with this email has already filled out form",
+        "status": 400
+      },
+      "nameEmpty": {
+        "ru": "Введите Фамилию, Имя и Отчество",
+        "en": "Enter your last name, first name and patronymic"
+      },
+      "phoneEmpty": {
+        "ru": "Введите номер телефона",
+        "en": "Enter phone number"
+      },
+      "create": {
+        "ru": "Введите корректные данные",
+        "en": "Enter correct data",
+        "status": 400
       }
     }
   }

@@ -13,7 +13,7 @@ const Page = () => {
 
     return (
         <div className="page">
-            <img className={"img"} src={require("./img/react.png")} alt={"react"}/>
+            <img className={"img"} src={require("./img/react.png")} alt={"react"} style={{ width: 200 }} />
             <div>
                 Default property: { defaultProperty }
             </div>

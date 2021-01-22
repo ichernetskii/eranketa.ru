@@ -188,7 +188,14 @@ module.exports = (env = {}) => {
         mode: isProd ? "production" : "development",
         devServer: {
             open: true,
+            proxy: {
+                "/api": {
+                    target: "http://localhost:5000",
+                    secure: false
+                }
+            },
             publicPath: "/",
+            historyApiFallback: true,
             port: 4200,
             overlay: {
                 warnings: true,
