@@ -72,7 +72,7 @@ module.exports = (env = {}) => {
                     // blank favicon
                     {
                         rel: "icon",
-                        href: "data:;base64,iVBORw0KGgo="
+                        href: "data:image/x-icon;,"
                     }
                 ],
                 headHtmlSnippet: `
@@ -80,7 +80,7 @@ module.exports = (env = {}) => {
                         <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js"></script>
                     <![endif]-->
                 `,
-                title: "Default title",
+                title: "Анкета для сторонников партии \"Единая Россия\"",
                 mobile: true,
                 buildDate: new Date().toString(),
                 minify: isProd
@@ -188,10 +188,22 @@ module.exports = (env = {}) => {
         mode: isProd ? "production" : "development",
         devServer: {
             open: true,
+            index: "",
             proxy: {
                 "/api": {
-                    target: "http://localhost:5000",
-                    secure: false
+                    target: "http://localhost:5000"
+                },
+                "/*/**": {
+                    pathRewrite: function (path, req) {
+                        const index = req.rawHeaders.findIndex(item => item === "Referer");
+                        if (index === -1) return ""; // not found header
+                        const u = req.rawHeaders[index + 1].replace(/\/[^\/]*$/, "");
+                        const url = new URL(u);
+                        const pathName = url.pathname;
+                        return req.url.replace(pathName, "");
+                    },
+                    target: "http://localhost:4200",
+                    changeOrigin: false
                 }
             },
             publicPath: "/",

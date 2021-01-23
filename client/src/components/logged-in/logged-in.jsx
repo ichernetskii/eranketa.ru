@@ -11,7 +11,10 @@ import {LogoutUser} from "components/store/actions";
 // import {useHTTP} from "@/hooks/useHTTP.js";
 
 const LoggedIn = () => {
-    const { dispatch } = useStore();
+    const { state, dispatch } = useStore();
+    const { userData } = state;
+    const { rights } = userData;
+    rights.forEach(item => rights[item] = true);
 
     const onLogoutHandler = () => {
         dispatch(LogoutUser());
@@ -20,13 +23,14 @@ const LoggedIn = () => {
     return (
         <div className="logged-in">
             <div className="logged-in__block">
-                Table
+                { rights.canView && <div><input defaultValue="canView" disabled={true} /></div> }
+                { rights.canEdit && <div><input defaultValue="canEdit" disabled={!rights.canEdit} /></div> }
             </div>
             <div className="logged-in__block">
                 <button className="logged-in__button" onClick={onLogoutHandler}>Выйти</button>
             </div>
         </div>
     );
-};
+}
 
 export default LoggedIn;

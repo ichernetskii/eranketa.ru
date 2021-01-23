@@ -12,13 +12,15 @@ import LoggedIn from "components/logged-in";
 
 // Store
 import {useStore, withStore} from "components/store";
-import {LoginUser} from "components/store/actions";
+import {LoginUser, LogoutUser} from "components/store/actions";
+
+import {isTokenExpired} from "js/assets/utils.js";
 
 const App = () => {
     const { state, dispatch } = useStore();
     const { userData } = state;
 
-    // check localStorage
+    // check localStorage at first launch
     useEffect(() => {
         const userDataLS = JSON.parse(localStorage.getItem("userData"));
         if (!userData.token && userDataLS && userDataLS.token && userDataLS.userId) {
@@ -27,6 +29,10 @@ const App = () => {
     }, []);
 
     const isAuthenticated = !!userData?.token;
+
+    if (isAuthenticated && isTokenExpired(userData.token)) {
+        dispatch(LogoutUser());
+    }
 
     return (
         <Router>

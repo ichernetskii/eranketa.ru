@@ -1,3 +1,6 @@
+// Token
+import jwt_decode from "jwt-decode";
+
 // Returns a function, that, when invoked, will only be triggered at most once
 // during a given window of time. Normally, the throttled function will run
 // as much as it can, without ever going more than once per `wait` duration;
@@ -33,4 +36,15 @@ export function throttle(func, wait, options) {
         }
         return result;
     };
+}
+
+export function isTokenExpired(token) {
+    const expired = jwt_decode(token).exp;
+    const now = new Date().valueOf()/1000;
+    return now > expired;
+}
+
+export function getUserData(token) {
+    const {iat, exp, ...data} = jwt_decode(token);
+    return data;
 }
