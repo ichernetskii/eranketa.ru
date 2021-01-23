@@ -60,7 +60,7 @@ router.post(
 
             const passwordHash = await bcrypt.hash(password, 12);
             // password hashing
-            const user = new User({ email, password: passwordHash, roles: ["guest"] });
+            const user = new User({ email, password: passwordHash, rights: [] });
             await user.save();
 
             res
@@ -122,14 +122,14 @@ router.post(
 
             // generate JWT
             const token = jwt.sign(
-                { userId: user?.id },
+                { userId: user?.id, rights: user?.rights, email: user?.email },
                 config.jwtSecret,
-                { expiresIn: "1h" }
+                { expiresIn: "1y" }
             );
 
             res
                 .status(200)
-                .json({ token, userId: user?.id })
+                .json({ token })
         } catch (e) {
             res
                 .status(config.server.error["abstract"].status)
