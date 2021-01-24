@@ -34,5 +34,5 @@ export const useHTTP = () => {
         }
     }
 
-    return { request, errorMessage, loading };
+    return { request, errorMessage, loading, error };
 }

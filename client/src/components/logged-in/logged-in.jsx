@@ -8,6 +8,9 @@ import "./logged-in.scss";
 import {useStore} from "components/store";
 import {LogoutUser} from "components/store/actions";
 
+// Components
+import FormList from "components/form-list";
+
 // import {useHTTP} from "@/hooks/useHTTP.js";
 
 const LoggedIn = () => {
@@ -21,13 +24,12 @@ const LoggedIn = () => {
     }
 
     return (
-        <div className="logged-in">
-            <div className="logged-in__block">
-                { rights.canView && <div><input defaultValue="canView" disabled={true} /></div> }
-                { rights.canEdit && <div><input defaultValue="canEdit" disabled={!rights.canEdit} /></div> }
+        <div className="page">
+            <div className="input-group">
+                <button className="input-group__button" onClick={onLogoutHandler}>Выйти</button>
             </div>
-            <div className="logged-in__block">
-                <button className="logged-in__button" onClick={onLogoutHandler}>Выйти</button>
+            <div className="input-group">
+                <FormList />
             </div>
         </div>
     );

@@ -32,8 +32,9 @@ $font-size-h6:                  0.85 * $font-size-base; // ~14px
 
 // Colors
 
-$color-accent:                  #F90;
+$color-accent:                  #039;
 $color-text:                    #000;
-$color-text-selection:          transparentize($color-accent, 0.1);
+$color-text-selection:          transparentize($color-accent, 0.6);
+$color-error:                   #F00;
 
 // Sizes

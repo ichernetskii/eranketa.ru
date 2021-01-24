@@ -35,18 +35,20 @@ const App = () => {
     }
 
     return (
-        <Router>
-                <Switch>
-                    <Route path="/" exact>
-                        <Form />
-                    </Route>
-                    <Route path="/admin" exact>
-                        {isAuthenticated && <div><LoggedIn /></div>}
-                        {!isAuthenticated && <div><Login /></div>}
-                    </Route>
-                    <Redirect to="/" />
-                </Switch>
-        </Router>
+        <div className="app">
+            <Router>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Form />
+                        </Route>
+                        <Route path="/admin" exact>
+                            { isAuthenticated && <LoggedIn /> }
+                            { !isAuthenticated && <Login /> }
+                        </Route>
+                        <Redirect to="/" />
+                    </Switch>
+            </Router>
+        </div>
     );
 };
 

@@ -10,6 +10,7 @@ import {useHTTP} from "@/hooks/useHTTP.js";
 
 // CSS
 import "./login.scss";
+import InputGroup from "components/input-group";
 
 const Login = () => {
     const message = useRef();
@@ -18,38 +19,72 @@ const Login = () => {
     const [data, setData] = useState({
         email: "", password: ""
     });
+    const [pageErrors, setPageErrors] = useState([]);
 
     const onInputHandler = e => {
         setData({ ...data, [e.target.id]: e.target.value });
     }
 
-    const onClickHandler = async () => {
+    const onLoginHandler = async () => {
         try {
+            message.current.classList.remove("input-group__message_error");
             const response = await request("/api/auth/login", "POST", data);
             dispatch(LoginUser(response));
         } catch (e) {
             if (Array.isArray(e.errors) && e.errors.length !== 0) {
-                message.current.innerHTML = e.errors.map(e => e.msg).join("<br/>");
+                setPageErrors([...e.errors]);
+                message.current.textContent = "";
             } else {
+                message.current.classList.add("input-group__message_error");
                 message.current.textContent = e.message || errorMessage;
             }
-            message.current.classList.add("error");
+        }
+    }
+
+    const onRegisterHandler = async () => {
+        try {
+            message.current.classList.remove("input-group__message_error");
+            const response = await request("/api/auth/register", "POST", data);
+            message.current.textContent = response.message;
+            setPageErrors([]);
+            setData({ email: "", password: "" });
+        } catch (e) {
+            if (Array.isArray(e.errors) && e.errors.length !== 0) {
+                setPageErrors([...e.errors]);
+                message.current.textContent = "";
+            } else {
+                message.current.classList.add("input-group__message_error");
+                message.current.textContent = e.message || errorMessage;
+            }
         }
     }
 
     return (
-        <div className="login">
-            <div className="login__block">
-                <label className="login__label" htmlFor="email">Email</label>
-                <input className="login__input" onChange={onInputHandler} id="email" />
-            </div>
-            <div className="login__block">
-                <label className="login__label" htmlFor="password">Пароль</label>
-                <input className="login__input" onChange={onInputHandler} id="password" type="password" />
-            </div>
-            <div className="login__block">
-                <button className="login__button" disabled={loading} onClick={onClickHandler}>Отправить</button>
-                <div className="login__message" ref={message} />
+        <div className="page">
+            <InputGroup
+                onInput={onInputHandler}
+                id="email"
+                label="Email"
+                maxLength={80}
+                pageErrors={pageErrors.filter(e => e.param === "email")}
+                required={false}
+                value={data?.email}
+            />
+            <InputGroup
+                onInput={onInputHandler}
+                loginFn={onLoginHandler}
+                id="password"
+                label="Пароль"
+                maxLength={50}
+                pageErrors={pageErrors.filter(e => e.param === "password")}
+                required={false}
+                value={data?.password}
+                type="password"
+            />
+            <div className="input-group">
+                <button className="input-group__button" disabled={loading} onClick={onLoginHandler}>Войти</button>
+                <button className="input-group__button" disabled={loading} onClick={onRegisterHandler}>Регистрация</button>
+                <div className="input-group__message" ref={message} />
             </div>
         </div>
     );

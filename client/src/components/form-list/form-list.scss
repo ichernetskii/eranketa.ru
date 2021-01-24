@@ -1,0 +1,33 @@
+@import "style/variables.scss";
+
+.form-list {
+  width: 100%;
+}
+
+.pager {
+  margin-top: 30px;
+  font-size: $font-size-h4;
+  display: flex;
+  justify-content: center;
+
+  &__item {
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      color: #999;
+    }
+  }
+}
+
+.loader {
+  height: 265px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collapsible-header {
+  background-color: #F8F8F8;
+}
