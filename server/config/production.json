@@ -1,7 +1,7 @@
 {
   "port": 5000,
   "lang": "ru",
-  "mongoUri": "mongodb://ilya:ilya239@localhost:27017/eranketa?authSource=admin",
+  "mongoUri": "mongodb://ilya:ilya239@3.126.168.10:27017/eranketa?authSource=admin",
   "jwtSecret": "vs!23defcjh#!@#-+gsgfhj*&TGUYG@#*G80-w34rh8Y&G^*gb87y",
   "server": {
     "error": {

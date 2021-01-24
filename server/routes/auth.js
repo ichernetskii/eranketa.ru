@@ -53,9 +53,13 @@ router.post(
             if (candidate) {
                 return res
                     .status(config.user.error["exists"].status)
-                    .json({
-                        message: config.user.error["exists"][lang]
-                    })
+                    .json(
+                        {
+                            errors: [{
+                                msg: config.user.error["exists"][lang],
+                                param: "email"
+                            }]
+                        })
             }
 
             const passwordHash = await bcrypt.hash(password, 12);
@@ -109,7 +113,12 @@ router.post(
             if (!user) {
                 return res
                     .status(config.user.error["notFound"].status)
-                    .json({ message: config.user.error["notFound"][lang] });
+                    .json({
+                        errors: [{
+                            msg: config.user.error["notFound"][lang],
+                            param: "email"
+                        }]
+                    });
             }
 
             const isMatch = await bcrypt.compare(password, user?.password);
@@ -117,7 +126,12 @@ router.post(
             if (!isMatch) {
                 return res
                     .status(config.user.error["notMatch"].status)
-                    .json({ message: config.user.error["notMatch"][lang] })
+                    .json({
+                        errors: [{
+                            msg: config.user.error["notMatch"][lang],
+                            param: "password"
+                        }]
+                    })
             }
 
             // generate JWT
@@ -131,6 +145,7 @@ router.post(
                 .status(200)
                 .json({ token })
         } catch (e) {
+            console.log(e);
             res
                 .status(config.server.error["abstract"].status)
                 .json({message: config.server.error["abstract"][lang]});

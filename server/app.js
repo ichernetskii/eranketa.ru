@@ -6,6 +6,7 @@ const app = express();
 const helmet = require("helmet");
 
 const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
 
 // CONFIG
 process.env["NODE_CONFIG_DIR"] = path.resolve("server", "config");

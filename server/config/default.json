@@ -50,6 +50,16 @@
         "ru": "Пользователь уже существует",
         "en": "User already exists",
         "status": 400
+      },
+      "noRights": {
+        "ru": "Недостаточно прав для выполнения операции",
+        "en": "Insufficient rights to perform the operation",
+        "status": 403
+      },
+      "authorization": {
+        "ru": "Ошибка авторизации",
+        "en": "Authorization error",
+        "status": 401
       }
     },
     "message": {
@@ -66,6 +76,16 @@
         "ru": "Спасибо за заполнение. Мы обязательно свяжемся с Вами.",
         "en": "Thanks for filling out. We will definitely contact you.",
         "status": 201
+      },
+      "update": {
+        "ru": "Данные обновлены",
+        "en": "Data updated",
+        "status": 200
+      },
+      "delete": {
+        "ru": "Данные удалены",
+        "en": "Data deleted",
+        "status": 200
       }
     },
     "error": {
