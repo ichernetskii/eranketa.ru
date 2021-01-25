@@ -15,7 +15,7 @@ const config = {
     mongoUri: cfg.get("mongoUri"),
     server: cfg.get("server"),
     lang: cfg.has("lang") ? cfg.get("lang") : "ru",
-    port: cfg.has("port") ? cfg.get("port") : 5000
+    port: cfg.has("port") ? cfg.get("port") : 5001
 }
 
 app.use(express.json({ extended: true }));

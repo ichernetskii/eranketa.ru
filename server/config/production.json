@@ -1,5 +1,5 @@
 {
-  "port": 5000,
+  "port": 5001,
   "lang": "ru",
   "mongoUri": "mongodb://ilya:ilya239@3.126.168.10:27017/eranketa?authSource=admin",
   "jwtSecret": "vs!23defcjh#!@#-+gsgfhj*&TGUYG@#*G80-w34rh8Y&G^*gb87y",

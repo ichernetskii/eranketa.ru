@@ -191,7 +191,7 @@ module.exports = (env = {}) => {
             index: "",
             proxy: {
                 "/api": {
-                    target: "http://localhost:5000"
+                    target: "http://localhost:5001"
                 },
                 "/*/**": {
                     pathRewrite: function (path, req) {
