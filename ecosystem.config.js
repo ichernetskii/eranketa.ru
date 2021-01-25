@@ -1,7 +1,7 @@
 module.exports = {
     apps: [{
         name: "eranketa.ru",
-        script: "npm -- server:prod",
+        script: "npm -- run server:prod",
         env: {
             NODE_ENV: "development"
         },
