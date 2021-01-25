@@ -5,7 +5,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "install": "concurrently \"npm install --prefix server\" \"npm install --prefix client\"",
+    "install": "concurrently \"npm install\" \"npm install --prefix server\" \"npm install --prefix client\"",
     "server:install": "npm install --prefix server",
     "server:dev": "nodemon server/app.js",
     "server:prod": "cross-env NODE_ENV=production node server/app.js",
