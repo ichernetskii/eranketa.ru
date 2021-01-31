@@ -39,6 +39,9 @@ router.post(
         body("phone")
             .notEmpty()
             .withMessage(() => config.form.error["phoneEmpty"][lang]),
+        body("birthDate")
+            .notEmpty()
+            .withMessage(() => config.form.error["birthDateEmpty"][lang]),
     ],
     async (req, res) => {
         try {
@@ -54,7 +57,7 @@ router.post(
                     });
             }
 
-            const {email, name, phone, additionalInfo} = req.body;
+            const {email, name, phone, birthDate, additionalInfo} = req.body;
             const candidate = await Form.findOne({email});
             // already exists
             if (candidate) {
@@ -68,7 +71,7 @@ router.post(
                     })
             }
 
-            const form = new Form({ email, name, phone, additionalInfo });
+            const form = new Form({ email, name, phone, birthDate, additionalInfo });
             await form.save();
 
             res
@@ -150,9 +153,21 @@ router.put("/",
     },
     [
         body("email")
-            .optional({checkFalsy: true})
+            .optional({nullable: true})
             .isEmail()
             .withMessage(() => config.user.error["wrongFormat"][lang]),
+        body("name")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["nameEmpty"][lang]),
+        body("phone")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["phoneEmpty"][lang]),
+        body("birthDate")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["birthDateEmpty"][lang]),
     ],
     auth,
     async (req, res) => {

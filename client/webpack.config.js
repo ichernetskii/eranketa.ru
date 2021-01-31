@@ -124,7 +124,13 @@ module.exports = (env = {}) => {
     const cssLoaders = extra => {
         let loaders = [
             isProd ? MiniCSSExtractPlugin.loader : "style-loader",
-            "css-loader"
+            "css-loader",
+            {
+                loader: 'resolve-url-loader',
+                options: {
+
+                }
+            }
         ];
 
         // post css
@@ -167,6 +173,7 @@ module.exports = (env = {}) => {
                 "@": paths.src.abs,
                 "js": path.resolve(paths.src.abs, paths.folders.js),
                 "style": path.resolve(paths.src.abs, paths.folders.style),
+                "fonts": path.resolve(paths.src.abs, paths.folders.fonts),
                 "img": path.resolve(paths.src.abs, paths.folders.img),
                 "components": path.resolve(paths.src.abs, paths.folders.components)
             }
@@ -275,7 +282,6 @@ module.exports = (env = {}) => {
                 // Babel loader
                 {
                     test: /\.jsx?$/,
-                    exclude: /node_modules/,
                     use: "babel-loader"
                 },
 

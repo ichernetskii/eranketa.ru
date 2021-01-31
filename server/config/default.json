@@ -102,6 +102,10 @@
         "ru": "Введите номер телефона",
         "en": "Enter phone number"
       },
+      "birthDateEmpty": {
+        "ru": "Введите дату рождения",
+        "en": "Enter birth date"
+      },
       "create": {
         "ru": "Введите корректные данные",
         "en": "Enter correct data",

@@ -1,9 +1,5 @@
 @import "style/variables.scss";
 
-.form-list {
-  width: 100%;
-}
-
 .pager {
   margin-top: 30px;
   font-size: $font-size-h4;
@@ -22,7 +18,7 @@
 }
 
 .loader {
-  height: 265px;
+  height: 340px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,4 +26,36 @@
 
 .collapsible-header {
   background-color: #F8F8F8;
+}
+
+.item {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  &__body {
+    padding: 1.5rem;
+  }
+
+  &__input-field {
+    margin-bottom: 0;
+  }
+
+  &__label {
+    left: 0 !important;
+  }
+
+  &__delete {
+    margin-left: 10px;
+    flex-shrink: 0;
+
+    i {
+      margin-left: -4px;
+      margin-right: 0;
+    }
+  }
 }

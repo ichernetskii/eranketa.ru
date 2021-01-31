@@ -1,9 +1,11 @@
 @import "~normalize.css";
 @import "style/imports.scss";
+@import "~materialize-css/sass/components/_color-variables.scss";
+@import "~materialize-css/sass/components/_color-classes.scss";
 
 body {
   color: $color-text;
-  font-family: $font-family-base;
+  font-family: $font-family-base !important;
   font-weight: $font-weight;
   font-size: $font-size-base;
 }
@@ -84,4 +86,20 @@ body {
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  @extend .blue, .lighten-1;
+  margin-bottom: 1px;
+}
+
+input:focus:not([readonly]),
+textarea:focus:not([readonly]) {
+  border-bottom-color: $color-accent !important;
+  box-shadow: 0 1px 0 0 $color-accent !important;
+}
+
+input:focus:not([readonly]) + label,
+textarea:focus:not([readonly]) + label {
+  color: $color-accent !important;
 }

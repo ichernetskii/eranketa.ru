@@ -24,9 +24,9 @@ const LoggedIn = () => {
     }
 
     return (
-        <div className="page">
+        <div className="page logged-in">
             <div className="input-group">
-                <button className="input-group__button" onClick={onLogoutHandler}>Выйти</button>
+                <button className="waves-effect waves-light btn input-group__button" onClick={onLogoutHandler}>Выйти</button>
             </div>
             <div className="input-group">
                 <FormList />

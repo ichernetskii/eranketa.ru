@@ -26,7 +26,7 @@ const App = () => {
         if (!userData.token && userDataLS && userDataLS.token && userDataLS.userId) {
             dispatch(LoginUser(userDataLS));
         }
-    }, []);
+    }, [userData.token, dispatch, LoginUser]);
 
     const isAuthenticated = !!userData?.token;
 

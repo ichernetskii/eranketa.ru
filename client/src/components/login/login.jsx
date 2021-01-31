@@ -21,7 +21,7 @@ const Login = () => {
     });
     const [pageErrors, setPageErrors] = useState([]);
 
-    const onInputHandler = e => {
+    const onChangeHandler = e => {
         setData({ ...data, [e.target.id]: e.target.value });
     }
 
@@ -60,30 +60,30 @@ const Login = () => {
     }
 
     return (
-        <div className="page">
+        <div className="page login">
             <InputGroup
-                onInput={onInputHandler}
+                onChange={onChangeHandler}
                 id="email"
                 label="Email"
                 maxLength={80}
                 pageErrors={pageErrors.filter(e => e.param === "email")}
                 required={false}
-                value={data?.email}
+                //value={data?.email}
             />
             <InputGroup
-                onInput={onInputHandler}
-                loginFn={onLoginHandler}
+                onChange={onChangeHandler}
                 id="password"
                 label="Пароль"
                 maxLength={50}
                 pageErrors={pageErrors.filter(e => e.param === "password")}
                 required={false}
-                value={data?.password}
+                //value={data?.password}
                 type="password"
+                onKeyDown={ e => { if (e.code === "Enter") onLoginHandler() } }
             />
             <div className="input-group">
-                <button className="input-group__button" disabled={loading} onClick={onLoginHandler}>Войти</button>
-                <button className="input-group__button" disabled={loading} onClick={onRegisterHandler}>Регистрация</button>
+                <button className="waves-effect waves-light btn input-group__button" disabled={loading} onClick={onLoginHandler}>Войти</button>
+                <button className="waves-effect waves-light btn input-group__button" style={{marginLeft: 10}} disabled={loading} onClick={onRegisterHandler}>Регистрация</button>
                 <div className="input-group__message" ref={message} />
             </div>
         </div>

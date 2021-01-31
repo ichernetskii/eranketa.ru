@@ -48,3 +48,22 @@ export function getUserData(token) {
     const {iat, exp, ...data} = jwt_decode(token);
     return data;
 }
+
+export function dateToString(date) {
+    if (!date) return "";
+    if (typeof date === "string") return date;
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth()+1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+}
+
+export function stringToDate(str) {
+    if (!str) return null;
+    if (str instanceof Date) return str;
+    if (str.search(/^\d{2}\.\d{2}\.\d{4}$/) !== -1) {
+        const [day, month, year] = str.split(".");
+        return new Date(+year, month - 1, +day);
+    } else return new Date(str);
+}

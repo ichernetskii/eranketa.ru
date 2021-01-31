@@ -1,0 +1,19 @@
+@import "style/variables.scss";
+
+.header {
+  background-image: url("./img/logo.jpg");
+  height: 300px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin-bottom: 30px;
+  background-size: cover;
+
+  @media screen and (max-width: 800px) {
+    height: 200px;
+  }
+
+  @media screen and (max-width: 400px) {
+    height: 165px;
+  }
+}
