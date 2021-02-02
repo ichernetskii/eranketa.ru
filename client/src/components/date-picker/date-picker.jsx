@@ -1,9 +1,14 @@
 // React
 import React, {useState, useLayoutEffect, useEffect, useCallback, useMemo, useRef} from "react";
 
+// Lib
+import {stringToDate} from "js/assets/utils.js";
+
+// Assets
+import i18n_ru from "./i18n.ru.json";
+
 // CSS
 import "./date-picker.scss";
-import {dateToString, stringToDate} from "js/assets/utils.js";
 
 const DatePicker = ({
     id,                         // id of React-element
@@ -16,7 +21,7 @@ const DatePicker = ({
                     }) => {
     const $datePicker = useRef(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const onSelectHandler = newDate => {
             if (onSelect) {
                 const e = {
@@ -34,10 +39,12 @@ const DatePicker = ({
         M.Datepicker.init($datePicker.current, {
             format: "dd.mm.yyyy",
             yearRange: [thisYear - 120, thisYear],
+            firstDay: 0,
             autoClose: true,
             defaultDate: stringToDate(defaultDate),
             setDefaultDate: true,
-            onSelect: onSelectHandler
+            onSelect: onSelectHandler,
+            i18n: i18n_ru
         });
     }, [onSelect, id, dataId, dataField]);
 

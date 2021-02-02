@@ -1,0 +1,35 @@
+@import "style/variables.scss";
+
+.page {
+  width: 100vw;
+  border-top: 0 solid transparent;
+  border-bottom: 1px solid transparent;
+
+  &__header {
+    margin: 1.25em 0;
+    font-weight: bold;
+    color: $color-accent-2;
+    padding: 0 5%;
+
+    @media screen and (max-width: 460px) {
+      font-size: $font-size-h2;
+    }
+
+    @media screen and (max-width: 390px) {
+      font-size: $font-size-h3;
+    }
+  }
+}
+
+.form-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.form-item {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

@@ -37,11 +37,29 @@ router.post(
             .notEmpty()
             .withMessage(() => config.form.error["nameEmpty"][lang]),
         body("phone")
-            .notEmpty()
-            .withMessage(() => config.form.error["phoneEmpty"][lang]),
+            .isMobilePhone(["ru-RU"])
+            .withMessage(() => config.form.error["phoneErrorFormat"][lang]),
         body("birthDate")
             .notEmpty()
             .withMessage(() => config.form.error["birthDateEmpty"][lang]),
+        body("birthDate")
+            .custom((value, { req }) => {
+                const now = new Date();
+                return now.getTime() - new Date(value).getTime() >= 16*365.25*24*3600*1000;
+            })
+            .withMessage(() => config.form.error["birthDateMinimum"][lang]),
+        body("social")
+            .isURL({host_whitelist: ["vk.com"]})
+            .withMessage(() => config.form.error["socialError"][lang]),
+        body("job")
+            .notEmpty()
+            .withMessage(() => config.form.error["jobEmpty"][lang]),
+        body("position")
+            .notEmpty()
+            .withMessage(() => config.form.error["positionEmpty"][lang]),
+        body("goal")
+            .notEmpty()
+            .withMessage(() => config.form.error["goalEmpty"][lang]),
     ],
     async (req, res) => {
         try {
@@ -57,7 +75,7 @@ router.post(
                     });
             }
 
-            const {email, name, phone, birthDate, additionalInfo} = req.body;
+            const {email, name, phone, birthDate, additionalInfo, social} = req.body;
             const candidate = await Form.findOne({email});
             // already exists
             if (candidate) {
@@ -71,7 +89,7 @@ router.post(
                     })
             }
 
-            const form = new Form({ email, name, phone, birthDate, additionalInfo });
+            const form = new Form({ email, name, phone, birthDate, additionalInfo, social });
             await form.save();
 
             res
@@ -162,12 +180,36 @@ router.put("/",
             .withMessage(() => config.form.error["nameEmpty"][lang]),
         body("phone")
             .optional({nullable: true})
-            .notEmpty()
-            .withMessage(() => config.form.error["phoneEmpty"][lang]),
+            .isMobilePhone(["ru-RU"])
+            .withMessage(() => config.form.error["phoneErrorFormat"][lang]),
         body("birthDate")
             .optional({nullable: true})
             .notEmpty()
             .withMessage(() => config.form.error["birthDateEmpty"][lang]),
+        body("birthDate")
+            .custom((value, { req }) => {
+                if (value) {
+                    const now = new Date();
+                    return now.getTime() - new Date(value).getTime() >= 16 * 365.25 * 24 * 3600 * 1000;
+                } else return true;
+            })
+            .withMessage(() => config.form.error["birthDateMinimum"][lang]),
+        body("social")
+            .optional({nullable: true})
+            .isURL({host_whitelist: ["vk.com"]})
+            .withMessage(() => config.form.error["socialError"][lang]),
+        body("job")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["jobEmpty"][lang]),
+        body("position")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["positionEmpty"][lang]),
+        body("goal")
+            .optional({nullable: true})
+            .notEmpty()
+            .withMessage(() => config.form.error["goalEmpty"][lang]),
     ],
     auth,
     async (req, res) => {

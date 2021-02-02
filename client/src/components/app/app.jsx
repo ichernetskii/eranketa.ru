@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom
 import "./app.scss";
 
 // Components
-import Form from "components/form";
+import FormItem from "components/form-item";
 import Login from "components/login";
 import LoggedIn from "components/logged-in";
 
@@ -23,10 +23,10 @@ const App = () => {
     // check localStorage at first launch
     useEffect(() => {
         const userDataLS = JSON.parse(localStorage.getItem("userData"));
-        if (!userData.token && userDataLS && userDataLS.token && userDataLS.userId) {
+        if (!userData?.token && userDataLS && userDataLS?.token && userDataLS?.userId) {
             dispatch(LoginUser(userDataLS));
         }
-    }, [userData.token, dispatch, LoginUser]);
+    }, [userData?.token, dispatch, LoginUser]);
 
     const isAuthenticated = !!userData?.token;
 
@@ -39,7 +39,7 @@ const App = () => {
             <Router>
                     <Switch>
                         <Route path="/" exact>
-                            <Form />
+                            <FormItem />
                         </Route>
                         <Route path="/admin" exact>
                             { isAuthenticated && <LoggedIn /> }

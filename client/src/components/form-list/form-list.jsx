@@ -1,17 +1,21 @@
 // React
-import React, {useState, useEffect, useCallback, useMemo, useRef} from "react";
-import { debounce } from "debounce";
-import { mapData } from "js/config.js";
+import React, {useState, useEffect, useRef} from "react";
 
 // Store
 import {useStore} from "components/store";
 
-// Hooks
-import {useHTTP} from "@/hooks/useHTTP.js";
+// Model
+import Form from "@/model/Form.js";
+
+// Libs
+import { debounce } from "debounce";
 
 // Components
 import InputGroup from "components/input-group";
 import Loader from "components/loader";
+
+// Config
+import { mapData } from "js/config.js";
 
 // CSS
 import "./form-list.scss";
@@ -21,36 +25,21 @@ const FormList = () => {
     const { state, dispatch } = useStore();
     const { userData } = state;
     const { token, rights } = userData;
-    const authorizationHeader = useMemo(() => ({ Authorization: `Bearer ${token}` }), [token]);
     rights.forEach(item => rights[item] = true);
     const [listOptions, setListOptions] = useState({
         skip: null,
         limit: 5,
         sort: null
     });
-    const [currentFormId, setCurrentFormId] = useState(null);
-    const [pageErrors, setPageErrors] = useState([]);
-    const [changes, setChanges] = useState(0);
+    const [pageErrors, setPageErrors] = useState({
+        errors: [],
+        controlId: null
+    });
     const [table, setTable] = useState(null);
     const [pager, setPager] = useState(null);
 
     // Refs
     const $collapsible = useRef(null);
-
-    const incChanges = () => setChanges(c => c + 1);
-    const toPage = (n, count) => {
-        if (n < 1) return;
-        const maxPage = Math.ceil(count/listOptions.limit);
-        if (n > maxPage) return;
-        setTable(<div className="loader"><Loader /></div>);
-        setListOptions(options => ({
-            ...options,
-            skip: (n - 1) * options.limit
-        }));
-    }
-    const getCurrentPage = () => Math.floor(1 + listOptions.skip / listOptions.limit);
-
-    const { request } = useHTTP();
 
     useEffect(() => {
         M.Collapsible.init($collapsible.current, {});
@@ -61,100 +50,110 @@ const FormList = () => {
     //     M.updateTextFields();
     // }, [table])
 
-    try {
-        const getTable = useCallback(async () => {
-            try {
-                const onChangeHandler = debounce(async e => {
-                    try {
-                        setCurrentFormId(e.target.id);
-                        setPageErrors([]);
-                        const response = await request("/api/form", "PUT", {
-                            id: e.target.dataset.id,
-                            [e.target.dataset.field]: e.target.value
-                        }, authorizationHeader);
+    // Table
+    useEffect(async () => {
+        try {
+            const onChangeHandler = async e => {
+                try {
+                    const form = new Form({
+                        id: e.target.dataset.id,
+                        [e.target.dataset.field]: e.target.value
+                    });
+                    const response = await form.update(token);
 
-                        M.toast({html: response.message});
+                    setPageErrors({});
+                    M.toast({html: response.message});
+                } catch (err) {
+                    if (err.errors) setPageErrors({
+                        errors: err.errors,
+                        controlId: e.target.id
+                    });
+                    else
+                        if (err.message) M.toast({html: err.message});
+                        else throw err
+                }
+            };
 
-                        incChanges();
-                    } catch (e) {
-                        if (e.errors) {
-                            setPageErrors(e.errors);
-                        } else
-                            if (e.message) M.toast({html: e.message});
-                            else throw e
-                    }
-                }, 2000);
-
-                const onDeleteHandler = async e => {
+            const onDeleteHandler = async e => {
+                try {
                     e.stopPropagation();
 
-                    try {
-                        const response = await request("/api/form", "DELETE", {
-                            id: e.target.dataset.id ?? e.target.parentElement.dataset.id
-                        }, authorizationHeader);
+                    const form = new Form({
+                        id: e.target.dataset.id ?? e.target.parentElement.dataset.id
+                    });
+                    const response = await form.delete(token);
 
-                        M.toast({html: response.message});
-
-                        incChanges();
-                    } catch (e) {
-                        if (e.errors) e.errors.forEach(e => M.toast({html: e.msg}));
-                        else
-                            if (e.message) M.toast({html: e.message});
-                            else throw e
-                    }
+                    setPageErrors({});
+                    M.toast({html: response.message});
+                } catch (err) {
+                    if (err.errors) setPageErrors({
+                        errors: err.errors,
+                        controlId: e.target?.id
+                    });
+                    else
+                        if (err.message) M.toast({html: err.message});
+                        else throw err
                 }
+            }
 
-                let query = Object
-                    .entries(listOptions)
-                    .map(([key, value]) => value ? `${key}=${value}` : "")
-                    .filter(queryItem => queryItem !== "")
-                    .join("&");
-                if (query !== "") query = "?" + query;
+            const form = new Form();
+            const forms = await form.getAll(token, listOptions);
 
-                const {forms} = await request("/api/form" + query, "GET", null, authorizationHeader);
-                setTable(
-                    forms.map(form => (
-                        <li key={form["_id"]} className="item">
-                            <div className="collapsible-header item__header">
-                                {form.name} - {form.email}
-                                { rights.canEdit && <a data-id={`${form["_id"]}`}
+            setTable(
+                forms.map(form => (
+                    <li key={form["_id"]} className="item">
+                        <div className="collapsible-header item__header">
+                            {form.name} - {form.email}
+                            { rights.canEdit &&
+                                <a data-id={`${form["_id"]}`}
                                    className="waves-effect waves-light btn item__delete"
-                                   onClickCapture={onDeleteHandler} >
+                                   onClickCapture={onDeleteHandler}>
                                     <i className="material-icons">delete</i>
                                 </a>}
-                            </div>
-                            {Object
-                                .entries(mapData)
-                                .map(([key, value]) => (
-                                    <div className="collapsible-body item__body" key={form["_id"] + key}>
-                                        <InputGroup
-                                            onChange={onChangeHandler}
-                                            id={key + "_" + form["_id"]}
-                                            label={value.label}
-                                            pageErrors={
-                                                (currentFormId === key + "_" + form["_id"]) && pageErrors
-                                            }
-                                            labelClasses="form-label"
-                                            type={value.type}
-                                            dataId={form["_id"]}
-                                            dataField={key}
-                                            defaultValue={form[key]}
-                                            onBlur={incChanges}
-                                            readOnly={!rights.canEdit}
-                                        />
-                                    </div>
-                                ))}
-                        </li>
-                    ))
-                );
-            } catch (e) {
-                M.toast({ html: e.message });
-                setTable(<div className="loader">{e.message}</div>);
-            }
-        }, [ token, listOptions, changes, pageErrors ]);
+                        </div>
+                        {Object
+                            .entries(mapData)
+                            .map(([key, value]) => (
+                                <div className="collapsible-body item__body" key={form["_id"] + key}>
+                                    <InputGroup
+                                        onChange={debounce(onChangeHandler, 2000)}
+                                        id={key + "_" + form["_id"]}
+                                        label={value.label}
+                                        pageErrors={ (pageErrors.controlId === key + "_" + form["_id"]) && pageErrors.errors }
+                                        type={value.type}
+                                        dataId={form["_id"]}
+                                        dataField={key}
+                                        defaultValue={form[key]}
+                                        readOnly={!rights.canEdit}
+                                    />
+                                </div>
+                            ))}
+                    </li>
+                ))
+            );
+        } catch (e) {
+            M.toast({ html: e.message });
+            setTable(<div className="loader">{e.message}</div>);
+        }
+    }, [listOptions, token, rights, mapData, pageErrors]);
 
-        const getPager = useCallback(async () => {
-            const {count} = await request("/api/form/count", "GET", null, authorizationHeader);
+    // Pager
+    useEffect(async () => {
+        try {
+            const form = new Form();
+            const count = await form.getCount(token);
+
+            const getCurrentPage = () => Math.floor(1 + listOptions.skip / listOptions.limit);
+            const toPage = (n, count) => {
+                if (n < 1) return;
+                const maxPage = Math.ceil(count/listOptions.limit);
+                if (n > maxPage) return;
+                setTable(<div className="loader"><Loader /></div>);
+                setListOptions(options => ({
+                    ...options,
+                    skip: (n - 1) * options.limit
+                }));
+            }
             const generatePages = () => {
                 const maxPage = Math.ceil(count/listOptions.limit);
                 return Array(maxPage)
@@ -178,15 +177,12 @@ const FormList = () => {
                     <div className="pager__item" onClick={() => toPage(getCurrentPage() + 1, count)}>❯</div>
                 </div>
             );
-        }, [ token, listOptions ]);
+        } catch (e) {
+            M.toast({ html: e.message });
+            setPager(null);
+        }
+    }, [listOptions, token, Loader, pageErrors]);
 
-        useEffect(() => {
-            getTable();
-            getPager();
-        }, [getTable, getPager]);
-    } catch (e) {
-        M.toast({ html: e.message });
-    }
 
     return (
         <div className="form-list">

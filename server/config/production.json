@@ -102,6 +102,34 @@
         "ru": "Введите номер телефона",
         "en": "Enter phone number"
       },
+      "phoneErrorFormat": {
+        "ru": "Введите телефон в формате +79001234567",
+        "en": "Enter phone number in format +79001234567"
+      },
+      "birthDateEmpty": {
+        "ru": "Введите дату рождения",
+        "en": "Enter birth date"
+      },
+      "birthDateMinimum": {
+        "ru": "Вам должно быть 16 лет",
+        "en": "You must be 16 years old"
+      },
+      "socialError": {
+        "ru": "Введите корректную ссылку на профиль ВКонтакте",
+        "en": "Enter right link to VKontakte profile"
+      },
+      "jobEmpty": {
+        "ru": "Введите место работы или учёбы",
+        "en": "Enter your place of work or study"
+      },
+      "positionEmpty": {
+        "ru": "Введите вашу должность или учебную специальность",
+        "en": "Enter your position or specialty"
+      },
+      "goalEmpty": {
+        "ru": "Введите цель вступления в партию",
+        "en": "Enter purpose of joining the party"
+      },
       "create": {
         "ru": "Введите корректные данные",
         "en": "Enter correct data",

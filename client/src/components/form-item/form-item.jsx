@@ -1,36 +1,40 @@
 // React
-import React, {useState, useCallback, useMemo} from "react";
+import React, {useState, useMemo} from "react";
+
+// Config
 import { mapData } from "js/config.js";
 
-import {useHTTP} from "@/hooks/useHTTP.js";
+// Libs
+import Form from "@/model/Form.js";
+import {errorMessage} from "js/assets/utils.js";
 
 // Components
 import InputGroup from "components/input-group";
 import Header from "components/header";
 
 // CSS
-import "./form.scss";
+import "./form-item.scss";
 
-const Form = () => {
+const FormItem = () => {
     const [message, setMessage] = useState({
         className: "input-group__message",
         text: ""
-
     });
     const [data, setData] = useState({
         email: "", name: "", phone: "", birthDate: "", additionalInfo: ""
     });
     const [pageErrors, setPageErrors] = useState([]);
+    const [isLoading, setLoading] = useState(false);
 
-    const {request, loading, errorMessage} = useHTTP();
-
-    const onChangeHandler = useCallback(e => {
+    const onChangeHandler = e => {
         setData(d => ({ ...d, [e.target.id]: e.target.value }));
-    }, []);
+    };
 
     const onClickHandler = async () => {
         try {
-            const response = await request("/api/form/create", "POST", data);
+            setLoading(true);
+            const form = new Form(data);
+            const response = await form.create();
             setPageErrors([]);
             setMessage({ className: "input-group__message", text: response.message });
         } catch (e) {
@@ -43,13 +47,16 @@ const Form = () => {
                     text: e.message || errorMessage
                 });
             }
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div className="page form-page">
             <Header />
-            <div className="form">
+            <h1 className="header-1 page__header">Анкета для сторонников партии</h1>
+            <div className="form-item">
                 {
                     Object.entries(mapData).map(([key, value]) => (
                         <InputGroup
@@ -63,14 +70,13 @@ const Form = () => {
                                     [pageErrors, key]
                                 )
                             }
-                            labelClasses="form-label"
                             type={value.type}
                             required={value.required}
                         />
                     ))
                 }
                 <div className="input-group">
-                    <button disabled={loading} className="waves-effect waves-light btn input-group__button" onClick={onClickHandler}>Отправить</button>
+                    <button disabled={isLoading} className="waves-effect waves-light btn input-group__button" onClick={onClickHandler}>Отправить</button>
                     <div className={message.className}>{message.text}</div>
                 </div>
             </div>
@@ -78,4 +84,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default FormItem;

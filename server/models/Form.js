@@ -5,6 +5,10 @@ const schema = new Schema({
     name: { type: String, required: true },
     phone: { type: String, required: true },
     birthDate: { type: Date, required: true },
+    social: { type: String, required: true },
+    job: { type: String, required: true },
+    position: { type: String, required: true },
+    goal: { type: String, required: true },
     additionalInfo: { type: String }
 });
 

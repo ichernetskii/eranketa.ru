@@ -4,7 +4,6 @@ import React, {useState, useEffect, useCallback} from "react";
 // CSS
 import "./input-group.scss";
 import DatePicker from "components/date-picker";
-import {stringToDate} from "js/assets/utils.js";
 
 const InputGroup = ({
                         onChange = null,
@@ -14,8 +13,6 @@ const InputGroup = ({
                         pageErrors = [],
                         type = "text",
                         required = false,
-                        labelClasses = "",
-                        value = null,
                         onKeyDown = null,
                         dataId = null,
                         dataField = null,
@@ -59,7 +56,6 @@ const InputGroup = ({
                         }}
                         onKeyDown={onKeyDown}
                         maxLength={maxLength}
-                        // value={value}
                         data-id={dataId}
                         data-field={dataField}
                         defaultValue={defaultValue}

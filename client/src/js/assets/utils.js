@@ -67,3 +67,34 @@ export function stringToDate(str) {
         return new Date(+year, month - 1, +day);
     } else return new Date(str);
 }
+
+export function buildQueryString(obj) {
+    let query = Object
+        .entries(obj)
+        .map(([key, value]) => (value !== null && value !== undefined) ? `${key}=${value}` : "")
+        .filter(queryItem => queryItem !== "")
+        .join("&");
+    if (query !== "") query = "?" + query;
+    return query;
+}
+
+export const errorMessage = "Произошла ошибка. Попробуйте позже.";
+
+export async function request(url, method = "GET", body = null, headers = {}) {
+    if (body) {
+        body = JSON.stringify(body);
+        headers["Content-Type"] = "application/json;charset=utf-8";
+    }
+
+    const response = await fetch(url, {method, headers, body});
+    const data = await response.json();
+
+    if (!response.ok) {
+        const e = new Error();
+        e.message = data.message || errorMessage;
+        if (Array.isArray(data.errors) && data.errors.length !== 0) e.errors = data.errors;
+        throw e;
+    }
+
+    return data;
+}

@@ -11,8 +11,6 @@ import {LogoutUser} from "components/store/actions";
 // Components
 import FormList from "components/form-list";
 
-// import {useHTTP} from "@/hooks/useHTTP.js";
-
 const LoggedIn = () => {
     const { state, dispatch } = useStore();
     const { userData } = state;

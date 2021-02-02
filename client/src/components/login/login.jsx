@@ -5,17 +5,23 @@ import React, {useState, useRef} from "react";
 import {useStore} from "components/store";
 import {LoginUser} from "components/store/actions";
 
-// Hooks
-import {useHTTP} from "@/hooks/useHTTP.js";
+// Model
+import User from "@/model/User.js";
+
+// Components
+import InputGroup from "components/input-group";
+
+// Libs
+import {errorMessage} from "js/assets/utils.js";
 
 // CSS
 import "./login.scss";
-import InputGroup from "components/input-group";
 
 const Login = () => {
     const message = useRef();
     const { dispatch } = useStore();
-    const {request, loading, errorMessage} = useHTTP();
+    const [isLoading, setLoading] = useState(false);
+
     const [data, setData] = useState({
         email: "", password: ""
     });
@@ -27,10 +33,14 @@ const Login = () => {
 
     const onLoginHandler = async () => {
         try {
+            setLoading(true);
             message.current.classList.remove("input-group__message_error");
-            const response = await request("/api/auth/login", "POST", data);
+            const user = new User(data);
+            const response = await user.login();
+            setLoading(false);
             dispatch(LoginUser(response));
         } catch (e) {
+            setLoading(false);
             if (Array.isArray(e.errors) && e.errors.length !== 0) {
                 setPageErrors([...e.errors]);
                 message.current.textContent = "";
@@ -43,8 +53,10 @@ const Login = () => {
 
     const onRegisterHandler = async () => {
         try {
+            setLoading(true)
             message.current.classList.remove("input-group__message_error");
-            const response = await request("/api/auth/register", "POST", data);
+            const user = new User(data);
+            const response = await user.register();
             message.current.textContent = response.message;
             setPageErrors([]);
             setData({ email: "", password: "" });
@@ -56,6 +68,8 @@ const Login = () => {
                 message.current.classList.add("input-group__message_error");
                 message.current.textContent = e.message || errorMessage;
             }
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -68,7 +82,6 @@ const Login = () => {
                 maxLength={80}
                 pageErrors={pageErrors.filter(e => e.param === "email")}
                 required={false}
-                //value={data?.email}
             />
             <InputGroup
                 onChange={onChangeHandler}
@@ -77,13 +90,12 @@ const Login = () => {
                 maxLength={50}
                 pageErrors={pageErrors.filter(e => e.param === "password")}
                 required={false}
-                //value={data?.password}
                 type="password"
                 onKeyDown={ e => { if (e.code === "Enter") onLoginHandler() } }
             />
             <div className="input-group">
-                <button className="waves-effect waves-light btn input-group__button" disabled={loading} onClick={onLoginHandler}>Войти</button>
-                <button className="waves-effect waves-light btn input-group__button" style={{marginLeft: 10}} disabled={loading} onClick={onRegisterHandler}>Регистрация</button>
+                <button className="waves-effect waves-light btn input-group__button" disabled={isLoading} onClick={onLoginHandler}>Войти</button>
+                <button className="waves-effect waves-light btn input-group__button" style={{marginLeft: 10}} disabled={isLoading} onClick={onRegisterHandler}>Регистрация</button>
                 <div className="input-group__message" ref={message} />
             </div>
         </div>
