@@ -251,7 +251,8 @@ module.exports = (env = {}) => {
                             options: {
                                 outputPath: paths.folders.img,
                                 name: getFilenameTemplate("[ext]"),
-                                esModule: false
+                                esModule: false,
+                                publicPath: "/" + paths.folders.img
                             }
                         }
                     ]
