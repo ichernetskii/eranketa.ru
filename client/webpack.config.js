@@ -125,12 +125,12 @@ module.exports = (env = {}) => {
         let loaders = [
             isProd ? MiniCSSExtractPlugin.loader : "style-loader",
             "css-loader",
-            {
-                loader: 'resolve-url-loader',
-                options: {
-
-                }
-            }
+            // {
+            //     loader: 'resolve-url-loader',
+            //     options: {
+            //
+            //     }
+            // }
         ];
 
         // post css
