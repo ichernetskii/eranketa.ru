@@ -75,7 +75,7 @@ router.post(
                     });
             }
 
-            const {email, name, phone, birthDate, additionalInfo, social} = req.body;
+            const {email, name, phone, birthDate, additionalInfo, social, job, position, goal} = req.body;
             const candidate = await Form.findOne({email});
             // already exists
             if (candidate) {
@@ -89,7 +89,7 @@ router.post(
                     })
             }
 
-            const form = new Form({ email, name, phone, birthDate, additionalInfo, social });
+            const form = new Form({ email, name, phone, birthDate, additionalInfo, social, job, position, goal });
             await form.save();
 
             res
