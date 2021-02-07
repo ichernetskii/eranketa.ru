@@ -48,6 +48,16 @@ const DatePicker = ({
             parse: stringToDate,
             setDefaultDate: !!defaultDate,
             onSelect: onSelectHandler,
+            onDraw: () => {
+                if (["MacOS", "iOS"].includes(getOS())) {
+                    document
+                        .querySelectorAll(".select-dropdown")
+                        .forEach($item => $item.classList.add("displayNone"))
+                    document
+                        .querySelectorAll(".datepicker-select")
+                        .forEach($item => $item.classList.add("browser-default"))
+                }
+            },
             i18n: i18n_ru
         });
     }, [onSelect, id, dataId, dataField, defaultDate]);
@@ -58,7 +68,7 @@ const DatePicker = ({
                 id={id}
                 data-id={dataId}
                 data-field={dataField}
-                className={`${className} datepicker ${["MacOS", "iOS"].includes(getOS()) ? "browser-default" : ""}`}
+                className={`${className} datepicker`}
                 readOnly={readOnly}
                 ref={$datePicker}
                 defaultValue={dateToString(stringToDate(defaultDate))}
