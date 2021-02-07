@@ -1,9 +1,12 @@
 // React
 import React, {useState, useEffect, useCallback} from "react";
 
+import NumberFormat from "react-number-format";
+
 // CSS
 import "./input-group.scss";
 import DatePicker from "components/date-picker";
+import {dateToString} from "js/assets/utils.js";
 
 const InputGroup = ({
                         onChange = null,
@@ -20,7 +23,7 @@ const InputGroup = ({
                         onBlur = null,
                         readOnly = null
                     }) => {
-    const [activeLabel, setActiveLabel] = useState(false);
+    const [activeLabel, setActiveLabel] = useState(["tel", "url"].includes(type));
     const [cancelError, setCancelError] = useState(false);
     let status = "";
     let messages = "";
@@ -33,7 +36,7 @@ const InputGroup = ({
         setCancelError(true);
         setActiveLabel(true);
         onChange(e);
-    }, [setCancelError, setActiveLabel, onChange]);
+    }, [onChange]);
 
     useEffect(() => {
         setCancelError(false);
@@ -45,7 +48,7 @@ const InputGroup = ({
     return (
         <div className="input-field col s6 input-group">
             {
-                (type === "text" || type === "password") &&
+                (["text", "password", "email"].includes(type)) &&
                     <input
                         id={id}
                         type={type}
@@ -62,6 +65,51 @@ const InputGroup = ({
                         onBlur={onBlur}
                         readOnly={readOnly}
                     />
+            }
+
+            {
+                type === "tel" &&
+                <NumberFormat
+                    format="+7 (###) ###-##-##"
+                    allowEmptyFormatting
+                    mask="_"
+                    id={id}
+                    type={type}
+                    className={`${status}`}
+                    onChange={e => {
+                        setCancelError(true);
+                        onChange(e);
+                    }}
+                    onKeyDown={onKeyDown}
+                    maxLength={maxLength}
+                    data-id={dataId}
+                    data-field={dataField}
+                    defaultValue={defaultValue}
+                    onBlur={onBlur}
+                    readOnly={readOnly}
+                />
+            }
+
+            {
+                type === "url" &&
+                <NumberFormat
+                    format={str => "https://vk.com/" + str}
+                    allowEmptyFormatting
+                    id={id}
+                    type={type}
+                    className={`${status}`}
+                    onChange={e => {
+                        setCancelError(true);
+                        onChange(e);
+                    }}
+                    onKeyDown={onKeyDown}
+                    maxLength={maxLength}
+                    data-id={dataId}
+                    data-field={dataField}
+                    defaultValue={defaultValue}
+                    onBlur={onBlur}
+                    readOnly={readOnly}
+                />
             }
 
             {

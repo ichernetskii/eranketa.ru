@@ -6,7 +6,7 @@
   border-bottom: 1px solid transparent;
 
   &__header {
-    margin: 1.25em 0;
+    margin: 1.5em 0;
     font-weight: bold;
     color: $color-accent-2;
     padding: 0 5%;
@@ -32,4 +32,31 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.result {
+  align-items: center;
+
+  .result-card {
+    width: 400px;
+    background-color: $color-bg !important;
+
+    .result-card__title {
+      margin-bottom: 0;
+      font-size: $font-size-h5*1.15;
+    }
+
+    .result-card__link {
+      color: $color-accent !important;
+    }
+
+    .result-card__link:hover {
+      color: darken($color-accent, 20%) !important;
+    }
+
+    @media screen and (max-width: 900px) {
+      min-width: 260px;
+      width: 40%;
+    }
+  }
 }

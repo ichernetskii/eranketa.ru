@@ -145,7 +145,6 @@ router.post(
                 .status(200)
                 .json({ token })
         } catch (e) {
-            console.log(e);
             res
                 .status(config.server.error["abstract"].status)
                 .json({message: config.server.error["abstract"][lang]});

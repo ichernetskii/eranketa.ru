@@ -103,8 +103,8 @@
         "en": "Enter phone number"
       },
       "phoneErrorFormat": {
-        "ru": "Введите телефон в формате +79001234567",
-        "en": "Enter phone number in format +79001234567"
+        "ru": "Введите телефон в формате +7 (900) 123-45-67",
+        "en": "Enter phone number in format +7 (900) 123-45-67"
       },
       "birthDateEmpty": {
         "ru": "Введите дату рождения",

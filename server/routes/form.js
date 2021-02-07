@@ -37,7 +37,10 @@ router.post(
             .notEmpty()
             .withMessage(() => config.form.error["nameEmpty"][lang]),
         body("phone")
-            .isMobilePhone(["ru-RU"])
+            .custom((value, {req}) => {
+                // +7 (921) 123-45-67
+                return value.search(/^(\+?7|8)?\s?\(?9\d{2}\)?\s?\d{3}-?\d{2}-?\d{2}$/) !== -1;
+            })
             .withMessage(() => config.form.error["phoneErrorFormat"][lang]),
         body("birthDate")
             .notEmpty()
@@ -180,7 +183,10 @@ router.put("/",
             .withMessage(() => config.form.error["nameEmpty"][lang]),
         body("phone")
             .optional({nullable: true})
-            .isMobilePhone(["ru-RU"])
+            .custom((value, {req}) => {
+                // +7 (921) 123-45-67
+                return value.search(/^(\+?7|8)?\s?\(?9\d{2}\)?\s?\d{3}-?\d{2}-?\d{2}$/) !== -1;
+            })
             .withMessage(() => config.form.error["phoneErrorFormat"][lang]),
         body("birthDate")
             .optional({nullable: true})

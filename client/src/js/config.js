@@ -1,7 +1,7 @@
 export const mapData = {
     email: {
         label: "Email",
-        type: "text",
+        type: "email",
         required: true
     },
     name: {
@@ -11,7 +11,7 @@ export const mapData = {
     },
     phone: {
         label: "Телефон",
-        type: "text",
+        type: "tel",
         required: true
     },
     birthDate: {
@@ -21,7 +21,7 @@ export const mapData = {
     },
     social: {
         label: "Ссылка на профиль ВКонтакте",
-        type: "text",
+        type: "url",
         required: "true"
     },
     job: {

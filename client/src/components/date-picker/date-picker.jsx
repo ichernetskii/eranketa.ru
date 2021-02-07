@@ -1,8 +1,8 @@
 // React
-import React, {useState, useLayoutEffect, useEffect, useCallback, useMemo, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 
 // Lib
-import {stringToDate} from "js/assets/utils.js";
+import {dateToString, stringToDate} from "js/assets/utils.js";
 
 // Assets
 import i18n_ru from "./i18n.ru.json";
@@ -26,7 +26,8 @@ const DatePicker = ({
             if (onSelect) {
                 const e = {
                     target: {
-                        value: newDate,
+                        value: stringToDate(newDate),
+                        //value: newDate,
                         id,
                         dataset: { id: dataId, field: dataField }
                     }
@@ -36,17 +37,19 @@ const DatePicker = ({
         };
 
         const thisYear = new Date().getFullYear();
+        console.log(1, dateToString(defaultDate), stringToDate(defaultDate));
         M.Datepicker.init($datePicker.current, {
             format: "dd.mm.yyyy",
             yearRange: [thisYear - 120, thisYear],
             firstDay: 0,
             autoClose: true,
-            defaultDate: stringToDate(defaultDate),
-            setDefaultDate: true,
+            defaultDate: dateToString(stringToDate(defaultDate)),
+            parse: stringToDate,
+            setDefaultDate: !!defaultDate,
             onSelect: onSelectHandler,
             i18n: i18n_ru
         });
-    }, [onSelect, id, dataId, dataField]);
+    }, [onSelect, id, dataId, dataField, defaultDate]);
 
     return (
             <input
@@ -57,7 +60,7 @@ const DatePicker = ({
                 className={`${className} datepicker`}
                 readOnly={readOnly}
                 ref={$datePicker}
-                defaultValue={stringToDate(defaultDate)}
+                defaultValue={dateToString(stringToDate(defaultDate))}
             />
     );
 };

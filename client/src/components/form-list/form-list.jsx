@@ -19,6 +19,7 @@ import { mapData } from "js/config.js";
 
 // CSS
 import "./form-list.scss";
+import {dateToString} from "js/assets/utils.js";
 
 const FormList = () => {
     // State
