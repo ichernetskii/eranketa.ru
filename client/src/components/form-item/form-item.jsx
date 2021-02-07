@@ -24,7 +24,7 @@ const FormItem = () => {
         email: "", name: "", phone: "", birthDate: "", additionalInfo: "", social: "", job: "", position: "", goal: ""
     };
     const [data, setData] = useState(initialData);
-    const [stage, setStage] = useState({value: 0, message: null});
+    const [stage, setStage] = useState({value: 1, message: "<div>Done</div><div>Done</div><div>Done</div><div>Done</div>"});
     const [pageErrors, setPageErrors] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const [content, setContent] = useState("");

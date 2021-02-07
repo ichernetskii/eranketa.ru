@@ -66,13 +66,15 @@ module.exports = (env = {}) => {
                     { content: "ie=edge", "http-equiv": "x-ua-compatible" },
                     { name: "description", content: "", lang: "ru" },
                     { name: "author", content: "Smarto" },
-                    { name: "robots", content: isProd ? "index, follow" : "none" }
+                    { name: "robots", content: isProd ? "index, follow" : "none" },
+                    { name: "theme-color", content: "#0B3A72" }
                 ],
                 links: [
                     // blank favicon
                     {
                         rel: "icon",
-                        href: "data:image/x-icon;,"
+                        href: "data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA3/APr6/wD/AA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERERERERERERERERERERERERERERERERERERERERERERERETMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA",
+                        type: "image/x-icon"
                     }
                 ],
                 headHtmlSnippet: `

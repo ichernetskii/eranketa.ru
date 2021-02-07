@@ -72,6 +72,10 @@ body {
   overflow-x: hidden;
 }
 
+.app, #root, html, body {
+  height: 100%;
+}
+
 .displayNone {
   display: none !important;
 }
