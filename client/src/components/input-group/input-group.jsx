@@ -6,7 +6,6 @@ import NumberFormat from "react-number-format";
 // CSS
 import "./input-group.scss";
 import DatePicker from "components/date-picker";
-import {dateToString} from "js/assets/utils.js";
 
 const InputGroup = ({
                         onChange = null,
@@ -96,6 +95,7 @@ const InputGroup = ({
                     format={str => "https://vk.com/" + str}
                     allowEmptyFormatting
                     id={id}
+                    inputMode="url"
                     type={type}
                     className={`${status}`}
                     onChange={e => {

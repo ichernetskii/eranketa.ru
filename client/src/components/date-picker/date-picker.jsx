@@ -40,7 +40,8 @@ const DatePicker = ({
         console.log(1, dateToString(defaultDate), stringToDate(defaultDate));
         M.Datepicker.init($datePicker.current, {
             format: "dd.mm.yyyy",
-            yearRange: [thisYear - 120, thisYear],
+            yearRange: [thisYear - 100, thisYear],
+            changeYear: true,
             firstDay: 0,
             autoClose: true,
             defaultDate: dateToString(stringToDate(defaultDate)),
