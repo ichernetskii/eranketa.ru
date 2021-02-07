@@ -22,6 +22,7 @@ const InputGroup = ({
                         onBlur = null,
                         readOnly = null
                     }) => {
+    const [social, setSocial] = useState("https://vk.com/");
     const [activeLabel, setActiveLabel] = useState(["tel", "url"].includes(type));
     const [cancelError, setCancelError] = useState(false);
     let status = "";
@@ -51,6 +52,7 @@ const InputGroup = ({
                     <input
                         id={id}
                         type={type}
+                        inputMode={type}
                         className={`${status}`}
                         onChange={e => {
                             setCancelError(true);
@@ -72,6 +74,8 @@ const InputGroup = ({
                     format="+7 (###) ###-##-##"
                     allowEmptyFormatting
                     mask="_"
+                    inputMode={type}
+
                     id={id}
                     type={type}
                     className={`${status}`}
@@ -91,22 +95,22 @@ const InputGroup = ({
 
             {
                 type === "url" &&
-                <NumberFormat
-                    format={str => "https://vk.com/" + str}
-                    allowEmptyFormatting
+                <input
+                    inputMode={type}
+
                     id={id}
-                    inputMode="url"
                     type={type}
                     className={`${status}`}
                     onChange={e => {
+                        if (e.target.value.match(/^https:\/\/vk\.com\/([a-zA-Z\d])*$/))
+                            setSocial(e.target.value);
                         setCancelError(true);
                         onChange(e);
                     }}
-                    onKeyDown={onKeyDown}
+                    value={social}
                     maxLength={maxLength}
                     data-id={dataId}
                     data-field={dataField}
-                    defaultValue={defaultValue}
                     onBlur={onBlur}
                     readOnly={readOnly}
                 />

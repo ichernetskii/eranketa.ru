@@ -31,7 +31,6 @@ const FormItem = () => {
 
     useEffect(() => {
         const onChangeHandler = e => {
-            console.log("!", e);
             setPageErrors(errors => errors.filter(err => err.param !== e.target.id));
             setData(d => ({ ...d, [e.target.id]: e.target.value }));
         };
@@ -64,8 +63,6 @@ const FormItem = () => {
             setStage({value: 0, message: null})
             setData(initialData);
         }
-
-        console.log(data.birthDate, typeof data.birthDate);
 
         switch (stage.value) {
             case  1: setContent(

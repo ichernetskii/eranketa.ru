@@ -37,7 +37,6 @@ const DatePicker = ({
         };
 
         const thisYear = new Date().getFullYear();
-        console.log(1, dateToString(defaultDate), stringToDate(defaultDate));
         M.Datepicker.init($datePicker.current, {
             format: "dd.mm.yyyy",
             yearRange: [thisYear - 100, thisYear],
