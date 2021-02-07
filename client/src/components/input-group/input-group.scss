@@ -12,6 +12,10 @@
   &__message {
     margin-top: 12px;
     color: $color-valid;
+
+    &_error {
+      color: $color-error;
+    }
   }
 
   & input:focus + .required::after {

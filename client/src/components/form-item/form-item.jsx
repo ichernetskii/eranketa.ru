@@ -21,7 +21,7 @@ const FormItem = () => {
         text: ""
     });
     const initialData = {
-        email: "", name: "", phone: "", birthDate: "", additionalInfo: "", social: "", job: "", position: "", goal: ""
+        email: "", name: "", phone: "", birthDate: "", additionalInfo: "", social: "https://vk.com/", job: "", position: "", goal: ""
     };
     const [data, setData] = useState(initialData);
     const [stage, setStage] = useState({value: 0, message: null});
@@ -33,6 +33,7 @@ const FormItem = () => {
         const onChangeHandler = e => {
             setPageErrors(errors => errors.filter(err => err.param !== e.target.id));
             setData(d => ({ ...d, [e.target.id]: e.target.value }));
+            setMessage(m => ({ ...m, text: "" }));
         };
 
         const onSubmitHandler = async () => {
@@ -46,7 +47,12 @@ const FormItem = () => {
             } catch (e) {
                 if (Array.isArray(e.errors) && e.errors.length !== 0) {
                     setPageErrors([...e.errors]);
-                    setMessage(m => ({...m, text: ""}))
+                    console.log(message);
+                    setMessage(m => ({
+                        ...m,
+                        className: "input-group__message input-group__message_error",
+                        text: "Исправьте ошибки выше"
+                    }))
                 } else {
                     setMessage({
                         className: "input-group__message input-group__message_error",

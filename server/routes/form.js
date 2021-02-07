@@ -53,6 +53,7 @@ router.post(
             .withMessage(() => config.form.error["birthDateMinimum"][lang]),
         body("social")
             .isURL({host_whitelist: ["vk.com"]})
+            .isLength({min: 18}) // https://vk.com/id1
             .withMessage(() => config.form.error["socialError"][lang]),
         body("job")
             .notEmpty()
@@ -203,6 +204,7 @@ router.put("/",
         body("social")
             .optional({nullable: true})
             .isURL({host_whitelist: ["vk.com"]})
+            .isLength({min: 18}) // https://vk.com/id1
             .withMessage(() => config.form.error["socialError"][lang]),
         body("job")
             .optional({nullable: true})
