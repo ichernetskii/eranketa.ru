@@ -2,7 +2,7 @@
 import React, {useEffect, useRef} from "react";
 
 // Lib
-import {dateToString, stringToDate} from "js/assets/utils.js";
+import {dateToString, getOS, stringToDate} from "js/assets/utils.js";
 
 // Assets
 import i18n_ru from "./i18n.ru.json";
@@ -58,7 +58,7 @@ const DatePicker = ({
                 id={id}
                 data-id={dataId}
                 data-field={dataField}
-                className={`${className} datepicker`}
+                className={`${className} datepicker ${["MacOS", "iOS"].includes(getOS()) ? "browser-default" : ""}`}
                 readOnly={readOnly}
                 ref={$datePicker}
                 defaultValue={dateToString(stringToDate(defaultDate))}
