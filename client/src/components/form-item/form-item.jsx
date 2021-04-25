@@ -47,7 +47,6 @@ const FormItem = () => {
             } catch (e) {
                 if (Array.isArray(e.errors) && e.errors.length !== 0) {
                     setPageErrors([...e.errors]);
-                    console.log(message);
                     setMessage(m => ({
                         ...m,
                         className: "input-group__message input-group__message_error",

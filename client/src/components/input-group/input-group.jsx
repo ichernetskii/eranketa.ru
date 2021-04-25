@@ -107,7 +107,7 @@ const InputGroup = ({
                         setCancelError(true);
                         onChange(e);
                     }}
-                    value={social}
+                    value={social ?? ""}
                     maxLength={maxLength}
                     data-id={dataId}
                     data-field={dataField}
