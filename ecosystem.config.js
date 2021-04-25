@@ -13,7 +13,7 @@ module.exports = {
         log_file: "combined.log",
         time: true,
         autorestart: true,
-        instance_var: 5001,
+        instance_var: "5001"
         // watch: ["server/config", "server/middleware", "server/models", "server/routes", "server/app.js"],
         // ignore_watch: ["node_modules", "client"],
         // watch_delay: 1000
