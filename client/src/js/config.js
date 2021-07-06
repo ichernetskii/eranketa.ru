@@ -35,7 +35,7 @@ export const mapData = {
         required: "true"
     },
     goal: {
-        label: "Цель вступления в партию",
+        label: "Ваша цель",
         type: "text",
         required: "true"
     },

@@ -86,7 +86,7 @@ const FormItem = () => {
             case  0:
             default: setContent(
                 <>
-                    <h1 className="header-1 page__header">Анкета для сторонников партии</h1>
+                    <h1 className="header-1 page__header">Анкета</h1>
                     <div className="form-item">
                         {
                             Object.entries(mapData).map(([key, value]) => (

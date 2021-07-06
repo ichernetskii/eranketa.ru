@@ -53,6 +53,7 @@
     "react-dom": "^17.0.1",
     "react-number-format": "^4.4.4",
     "react-router-dom": "^5.2.0",
-    "resolve-url-loader": "^3.1.2"
+    "resolve-url-loader": "^3.1.2",
+    "server": "file:.."
   }
 }
