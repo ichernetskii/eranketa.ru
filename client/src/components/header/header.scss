@@ -7,9 +7,20 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-color: $color-accent-2;
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  flex-direction: column;
+  color: #FFF;
+  padding: 20px 50px 0 0;
 
   @media screen and (max-width: 400px) {
     height: 100px;
     background-size: cover;
+  }
+
+  a {
+    margin-bottom: 10px;
+    text-decoration: underline;
   }
 }

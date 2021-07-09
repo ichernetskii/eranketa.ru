@@ -127,8 +127,8 @@
         "en": "Enter your position or specialty"
       },
       "goalEmpty": {
-        "ru": "Введите цель вступления в партию",
-        "en": "Enter purpose of joining the party"
+        "ru": "Введите цель",
+        "en": "Enter purpose"
       },
       "create": {
         "ru": "Введите корректные данные",
