@@ -65,7 +65,7 @@ module.exports = (env = {}) => {
                     { charset: "utf-8" },
                     { content: "ie=edge", "http-equiv": "x-ua-compatible" },
                     { name: "description", content: "", lang: "ru" },
-                    { name: "author", content: "Smarto" },
+                    { name: "author", content: "Ilia Chernetskii <info@smarto.pro>" },
                     { name: "robots", content: isProd ? "index, follow" : "none" },
                     { name: "theme-color", content: "#0B3A72" }
                 ],

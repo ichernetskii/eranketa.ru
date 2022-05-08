@@ -14,6 +14,7 @@ import Header from "components/header";
 
 // CSS
 import "./form-item.scss";
+import Branding from "../branding";
 
 const FormItem = () => {
     const [message, setMessage] = useState({
@@ -118,6 +119,9 @@ const FormItem = () => {
             {
                 content
             }
+            <div className="branding__wrapper">
+                <Branding UTMSource={"eranketa"} />
+            </div>
         </div>
     );
 };

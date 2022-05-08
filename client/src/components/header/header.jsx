@@ -7,8 +7,8 @@ import "./header.scss";
 const Header = () => {
     return (
         <div className="header">
-            <a href="/admin">Goto admin panel</a>
-            <span>Test login: eranketa@eranketa.ru, password: eranketa</span>
+            <a href="/admin">Admin panel</a>
+            <span>Test login: eranketa@eranketa.ru<br/>Password: eranketa</span>
         </div>
     );
 };
