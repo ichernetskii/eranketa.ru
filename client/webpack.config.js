@@ -197,30 +197,17 @@ module.exports = (env = {}) => {
         mode: isProd ? "production" : "development",
         devServer: {
             open: true,
-            index: "",
             proxy: {
                 "/api": {
-                    target: "http://localhost:5001"
-                },
-                "/*/**": {
-                    pathRewrite: function (path, req) {
-                        const index = req.rawHeaders.findIndex(item => item === "Referer");
-                        if (index === -1) return ""; // not found header
-                        const u = req.rawHeaders[index + 1].replace(/\/[^\/]*$/, "");
-                        const url = new URL(u);
-                        const pathName = url.pathname;
-                        return req.url.replace(pathName, "");
-                    },
-                    target: "http://localhost:4200",
-                    changeOrigin: false
+                    target: "http://SERVER_CONTAINER:5001"
                 }
             },
-            publicPath: "/",
             historyApiFallback: true,
             port: 4200,
-            overlay: {
-                warnings: true,
-                errors: true
+            hot: true,
+            host: "0.0.0.0",
+            watchOptions: {
+                poll: 1000,
             }
         },
         entry: {
@@ -228,8 +215,8 @@ module.exports = (env = {}) => {
         },
         output: {
             path: isProd ? paths.dist.release.abs : paths.dist.debug.abs,
-            publicPath: "./",
-            filename: fixSlashes(path.join(paths.folders.js, getFilenameTemplate("js")))
+            filename: fixSlashes(path.join(paths.folders.js, getFilenameTemplate("js"))),
+            hashFunction: "xxhash64"
         },
         module: {
             rules: [

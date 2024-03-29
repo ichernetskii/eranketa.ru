@@ -2,16 +2,14 @@
   "name": "eranketa-client",
   "version": "1.0.0",
   "description": "",
-  "private": false,
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "watch": "webpack serve",
-    "production": "webpack --env mode=production",
-    "development": "webpack --env mode=development"
+    "development": "webpack serve",
+    "production": "webpack --env mode=production"
   },
-  "author": "Ilia Chernetskii <ilya.chernetsky@gmail.com>",
+  "author": "Ilia Chernetskii <ichernetskii@gmail.com>",
   "license": "ISC",
-  "proxy": "http://localhost:5001",
   "devDependencies": {
     "@babel/cli": "^7.12.7",
     "@babel/core": "^7.12.7",
@@ -38,7 +36,7 @@
     "sass": "^1.32.5",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
-    "webpack": "^5.17.0",
+    "webpack": "^5.54.0",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   },

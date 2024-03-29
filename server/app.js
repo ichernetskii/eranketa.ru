@@ -4,20 +4,21 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const helmet = require("helmet");
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
 // CONFIG
-process.env["NODE_CONFIG_DIR"] = path.resolve("server", "config");
+process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "config");
 const cfg = require("config");
 const config = {
-    mongoUri: cfg.get("mongoUri"),
     server: cfg.get("server"),
     lang: cfg.has("lang") ? cfg.get("lang") : "ru",
     port: cfg.has("port") ? cfg.get("port") : 5001
 }
 
+app.use(cors());
 app.use(express.json({ extended: true }));
 app.use(helmet());
 
@@ -28,7 +29,14 @@ app.use("/api/form", require("./routes/form.js"));
 async function start() {
     try {
         // MONGOOSE
-        await mongoose.connect(config.mongoUri, {
+        const {
+            MONGO_INITDB_ROOT_USERNAME: login,
+            MONGO_INITDB_ROOT_PASSWORD: pwd,
+            MONGO_CONTAINER: container,
+            MONGO_INITDB_DATABASE: db
+        } = process.env;
+        const uri =   `mongodb://${login}:${pwd}@${container}/${db}?authSource=admin`;
+        await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true

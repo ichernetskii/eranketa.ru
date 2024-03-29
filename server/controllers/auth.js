@@ -94,7 +94,7 @@ const register = async (req, res) => {
 
         const passwordHash = await bcrypt.hash(password, 12);
         // password hashing
-        const user = new User({ email, password: passwordHash, rights: [] });
+        const user = new User({ email, password: passwordHash, rights: ["canView"] });
         await user.save();
 
         res

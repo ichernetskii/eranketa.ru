@@ -8,7 +8,7 @@ const Header = () => {
     return (
         <div className="header">
             <a href="/admin">Admin panel</a>
-            <span>Test login: eranketa@eranketa.ru<br/>Password: eranketa</span>
+            <span>Test login: ilia@google.com<br/>Password: 111111</span>
         </div>
     );
 };

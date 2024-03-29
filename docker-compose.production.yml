@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+    db:
+        build:
+            context: ./db
+            dockerfile: ./Dockerfile
+        ports:
+            - "27017:27017"
+        container_name: "MONGO_CONTAINER"
+        volumes:
+            - DB_VOLUME:/data/db
+        networks:
+            - NETWORK
+        env_file:
+            - ./db/config/.env
+        restart: unless-stopped
+    server:
+        build:
+            context: ./server
+            dockerfile: ./Dockerfile
+        ports:
+            - "5001:5001"
+        container_name: "SERVER_CONTAINER"
+        networks:
+            - NETWORK
+        environment:
+            NODE_ENV: production
+        env_file:
+            - ./db/config/.env
+        depends_on:
+            - db
+        restart: unless-stopped
+    client:
+        build:
+            context: ./client
+            dockerfile: ./Dockerfile.production
+        ports:
+            - "80:80"
+        container_name: "CLIENT_CONTAINER"
+        networks:
+            - NETWORK
+        restart: unless-stopped
+volumes:
+    DB_VOLUME:
+        name: DB_VOLUME
+        labels:
+            - DB_VOLUME_LABEL
+networks:
+    NETWORK:
+        name: NETWORK
