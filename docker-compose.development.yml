@@ -6,7 +6,7 @@ services:
             dockerfile: ./Dockerfile
         ports:
             - "27017:27017"
-        container_name: "MONGO_CONTAINER"
+        container_name: "ERANKETA_MONGO_CONTAINER"
         volumes:
             - DB_VOLUME:/data/db
         networks:
@@ -19,7 +19,7 @@ services:
             dockerfile: ./Dockerfile
         ports:
             - "5001:5001"
-        container_name: "SERVER_CONTAINER"
+        container_name: "ERANKETA_SERVER_CONTAINER"
         volumes:
             - ./server:/SERVER_APP
             - /SERVER_APP/node_modules
@@ -37,12 +37,12 @@ services:
             dockerfile: ./Dockerfile.development
         ports:
             - "4200:4200"
-        container_name: "CLIENT_CONTAINER"
+        container_name: "ERANKETA_CLIENT_CONTAINER"
         networks:
             - NETWORK
         volumes:
-            - ./client/src:/CLIENT_APP/src
-            - /CLIENT_APP/node_modules
+            - ./client/src:/var/www/CLIENT_APP/src
+            - /var/www/CLIENT_APP/node_modules
 volumes:
     DB_VOLUME:
         name: DB_VOLUME

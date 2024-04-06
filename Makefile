@@ -12,3 +12,7 @@ stop-production:
 	docker image prune --all --force; \
 	docker volume prune --all --force --filter "label!=DB_VOLUME_LABEL" ; \
 	docker network prune --force
+zip:
+	zip -er config.zip db/config/ server/config/ -x '*.DS_Store'
+unzip:
+	unzip config.zip

@@ -1,8 +1,8 @@
-FROM node:18.12.1-alpine as build
+FROM node:16-alpine as build
 
 WORKDIR /CLIENT_APP_SOURCE
 
-RUN apk add --no-cache autoconf automake file g++ libtool make nasm libpng-dev
+RUN apk add --no-cache bash autoconf automake file g++ libtool make nasm libpng-dev
 
 COPY package*.json .
 
@@ -14,12 +14,12 @@ RUN npm run production
 
 FROM nginx:1.24-alpine
 
-WORKDIR /CLIENT_APP
+WORKDIR /var/www/CLIENT_APP
 
 COPY --from=build /CLIENT_APP_SOURCE/dist/release .
 
-COPY --from=build /CLIENT_APP_SOURCE/default.conf /etc/nginx/conf.d/
+RUN rm /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+COPY /default.conf /etc/nginx/conf.d/CLIENT_APP.conf
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -35,7 +35,7 @@ async function start() {
             MONGO_CONTAINER: container,
             MONGO_INITDB_DATABASE: db
         } = process.env;
-        const uri =   `mongodb://${login}:${pwd}@${container}/${db}?authSource=admin`;
+        const uri = `mongodb://${login}:${pwd}@${container}/${db}?authSource=admin`;
         await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,

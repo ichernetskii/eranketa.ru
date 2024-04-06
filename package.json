@@ -1,19 +1,9 @@
 {
-  "name": "server",
+  "name": "eranketa",
   "version": "1.0.0",
   "private": true,
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "server:install": "cd server && npm install",
-    "server:development": "cd server && npm run development",
-    "server:production": "cd server && npm run production",
-    "client:install": "cd client && npm install",
-    "client:development": "cd client && npm run development",
-    "client:production": "cd client && npm run production",
-    "dev": "cross-env NODE_ENV=development concurrently 'npm run server:development' 'npm run client:development'",
-    "prod": "npm i && npm run server:install && npm run client:install && npm run client:production && pm2 start ecosystem.config.js --env production"
-  },
   "author": "Ilia Chernetskii <ichernetskii@gmail.com>",
   "license": "ISC",
   "devDependencies": {

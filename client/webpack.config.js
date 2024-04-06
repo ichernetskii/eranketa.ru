@@ -199,7 +199,7 @@ module.exports = (env = {}) => {
             open: true,
             proxy: {
                 "/api": {
-                    target: "http://SERVER_CONTAINER:5001"
+                    target: "http://ERANKETA_SERVER_CONTAINER:5001"
                 }
             },
             historyApiFallback: true,
