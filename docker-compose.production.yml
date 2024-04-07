@@ -35,12 +35,11 @@ services:
             - NETWORK
         depends_on:
             -   server
-        restart: unless-stopped
 volumes:
     DB_VOLUME:
         name: DB_VOLUME
         labels:
-            - DB_VOLUME_LABEL
+            - dont-delete
 networks:
     NETWORK:
         name: NETWORK
